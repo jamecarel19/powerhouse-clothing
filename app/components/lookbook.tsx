@@ -4,50 +4,50 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
 
-// Image paths - supports JPG, PNG, WebP, and HEIC formats
-// HEIC files are automatically converted to JPG (run: npm run convert-heic)
+// Static imports for automatic sizing and blur placeholders
+import image1 from "@/app/images/image-1.png";
+import image2 from "@/app/images/image-2.jpg";
+import image3 from "@/app/images/image-3.jpg";
+import image4 from "@/app/images/image-4.png";
+import image5 from "@/app/images/image5.png";
+import image6 from "@/app/images/image-6.png";
+
 const imageItems = [
   {
     id: 1,
     span: "md:row-span-2",
-    height: "h-64 md:h-full",
     category: "Baggy Jeans",
-    image: "/images/image-1.PNG", // Converted from HEIC
+    image: image1,
   },
   {
     id: 2,
     span: "",
-    height: "h-52",
     category: "Oversized Tees",
-    image: "/images/image-2.jpg",
+    image: image2,
   },
   {
     id: 3,
     span: "",
-    height: "h-40",
     category: "Trendy Shirts",
-    image: "/images/image-3.jpg",
+    image: image3,
   },
   {
     id: 4,
     span: "md:row-span-2",
-    height: "h-64 md:h-full",
     category: "Accessories",
-    image: "/images/image-4.PNG",
+    image: image4,
   },
   {
     id: 5,
     span: "",
-    height: "h-52",
     category: "Watches",
-    image: "/images/image5.PNG",
+    image: image5,
   },
   {
     id: 6,
     span: "",
-    height: "h-40",
     category: "Perfumes",
-    image: "/images/image-6.PNG",
+    image: image6,
   },
 ];
 
@@ -58,19 +58,17 @@ function LookbookItem({ item, index }: { item: typeof imageItems[0]; index: numb
     offset: ["start end", "end start"],
   });
 
-  // Parallax effect - images move at different speeds
+  // Parallax effect
   const y = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? -30 : 30, index % 2 === 0 ? 30 : -30]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
-
-  const imageSrc = item.image || "";
 
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{
         duration: 0.9,
         delay: index * 0.08,
@@ -78,90 +76,65 @@ function LookbookItem({ item, index }: { item: typeof imageItems[0]; index: numb
       }}
       className={`group relative overflow-hidden border border-white/10 bg-neutral-900/40 ${item.span}`}
     >
-      {imageSrc ? (
-        <>
-          {/* Image with parallax and zoom effects */}
-          <motion.div
-            style={{ y, scale }}
-            className={`relative ${item.height} w-full overflow-hidden`}
+      {/* Image with intrinsic sizing */}
+      <motion.div
+        style={{ y, scale }}
+        className="relative w-full overflow-hidden"
+      >
+        <Image
+          src={item.image}
+          alt={item.category}
+          placeholder="blur"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={index < 2}
+          className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+
+        {/* Color overlay that responds to scroll */}
+        <motion.div
+          style={{ opacity }}
+          className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 pointer-events-none"
+        />
+      </motion.div>
+
+      {/* Hover zoom effect overlay */}
+      <motion.div
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-0 pointer-events-none origin-center bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_60%),radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.1),transparent_60%)] mix-blend-overlay opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+      />
+
+      {/* Animated border glow on hover */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+        className="absolute inset-0 pointer-events-none border-2 border-white/20 transition-opacity duration-500"
+      />
+
+      {/* Category label */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileHover={{ opacity: 1, y: 0 }}
+        className="pointer-events-none absolute inset-0 flex flex-col justify-between p-4"
+      >
+        <div className="flex items-center justify-between">
+          <motion.span
+            initial={{ x: -10, opacity: 0 }}
+            whileHover={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-white drop-shadow-lg"
           >
-            <Image
-              src={imageSrc}
-              alt={item.category}
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={index < 2}
-            />
-            {/* Color overlay that responds to scroll */}
-            <motion.div
-              style={{ opacity }}
-              className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"
-            />
-          </motion.div>
-
-          {/* Hover zoom effect */}
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 origin-center bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_60%),radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.1),transparent_60%)] mix-blend-overlay opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-          />
-
-          {/* Animated border glow on hover */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
-            className="absolute inset-0 border-2 border-white/20 transition-opacity duration-500"
-          />
-
-          {/* Category label with motion */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileHover={{ opacity: 1, y: 0 }}
-            className="pointer-events-none absolute inset-0 flex flex-col justify-between p-4"
+            {item.category}
+          </motion.span>
+          <motion.span
+            initial={{ x: 10, opacity: 0 }}
+            whileHover={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.15 }}
+            className="text-[0.55rem] uppercase tracking-[0.3em] text-white/80"
           >
-            <div className="flex items-center justify-between">
-              <motion.span
-                initial={{ x: -10, opacity: 0 }}
-                whileHover={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-white drop-shadow-lg"
-              >
-                {item.category}
-              </motion.span>
-              <motion.span
-                initial={{ x: 10, opacity: 0 }}
-                whileHover={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.15 }}
-                className="text-[0.55rem] uppercase tracking-[0.3em] text-white/80"
-              >
-                View
-              </motion.span>
-            </div>
-          </motion.div>
-        </>
-      ) : (
-        // Placeholder for when image is not available
-        <>
-          <div
-            className={`pointer-events-none ${item.height} w-full bg-gradient-to-b from-neutral-700/40 via-neutral-900/80 to-black`}
-          />
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 origin-center bg-[radial-gradient(circle_at_20%_0%,rgba(255,255,255,0.18),transparent_55%),radial-gradient(circle_at_80%_100%,rgba(255,255,255,0.12),transparent_55%)] mix-blend-screen opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-          />
-          <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-4">
-            <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.3em] text-neutral-400">
-              <span>{item.category}</span>
-              <span>Coming Soon</span>
-            </div>
-            <div className="text-[0.6rem] uppercase tracking-[0.3em] text-neutral-500">
-              Add image to /public/images/
-            </div>
-          </div>
-        </>
-      )}
+            View
+          </motion.span>
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
