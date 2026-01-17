@@ -32,9 +32,25 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen items-center justify-center bg-black px-6 pt-28 text-white"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-6 pt-28 text-white"
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 md:flex-row md:items-end md:gap-16">
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0 select-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover opacity-50"
+        >
+          <source src="/images/powerhouse.mp4" type="video/mp4" />
+        </video>
+        {/* Gradient Overlays for seamless blending */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/30" />
+        <div className="absolute inset-0 bg-black/20" />
+      </div>
+
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 md:flex-row md:items-end md:gap-16">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
