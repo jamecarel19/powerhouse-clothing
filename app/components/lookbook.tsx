@@ -7,47 +7,47 @@ import { useRef } from "react";
 // Image paths - supports JPG, PNG, WebP, and HEIC formats
 // HEIC files are automatically converted to JPG (run: npm run convert-heic)
 const imageItems = [
-  { 
-    id: 1, 
-    span: "md:row-span-2", 
-    height: "h-64 md:h-full", 
+  {
+    id: 1,
+    span: "md:row-span-2",
+    height: "h-64 md:h-full",
     category: "Baggy Jeans",
     image: "/images/image-1.jpg", // Converted from HEIC
   },
-  { 
-    id: 2, 
-    span: "", 
-    height: "h-52", 
+  {
+    id: 2,
+    span: "",
+    height: "h-52",
     category: "Oversized Tees",
     image: "/images/image-2.jpg",
   },
-  { 
-    id: 3, 
-    span: "", 
-    height: "h-40", 
+  {
+    id: 3,
+    span: "",
+    height: "h-40",
     category: "Trendy Shirts",
     image: "/images/image-3.jpg",
   },
-  { 
-    id: 4, 
-    span: "md:row-span-2", 
-    height: "h-64 md:h-full", 
+  {
+    id: 4,
+    span: "md:row-span-2",
+    height: "h-64 md:h-full",
     category: "Accessories",
-    image: "/images/image-4.jpg",
+    image: "/images/image-4.PNG",
   },
-  { 
-    id: 5, 
-    span: "", 
-    height: "h-52", 
+  {
+    id: 5,
+    span: "",
+    height: "h-52",
     category: "Watches",
-    image: "/images/image-5.jpg",
+    image: "/images/image-5.PNG",
   },
-  { 
-    id: 6, 
-    span: "", 
-    height: "h-40", 
+  {
+    id: 6,
+    span: "",
+    height: "h-40",
     category: "Perfumes",
-    image: "/images/image-6.jpg",
+    image: "/images/image-6.PNG",
   },
 ];
 
