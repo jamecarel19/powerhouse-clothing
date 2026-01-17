@@ -34,7 +34,7 @@ export function Hero() {
       id="top"
       className="relative flex min-h-screen items-center justify-center bg-black px-6 pt-28 text-white"
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-16 md:flex-row md:items-end">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 md:flex-row md:items-end md:gap-16">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
