@@ -12,7 +12,7 @@ const imageItems = [
     span: "md:row-span-2",
     height: "h-64 md:h-full",
     category: "Baggy Jeans",
-    image: "/images/image-1.jpg", // Converted from HEIC
+    image: "/images/image-1.PNG", // Converted from HEIC
   },
   {
     id: 2,
@@ -40,7 +40,7 @@ const imageItems = [
     span: "",
     height: "h-52",
     category: "Watches",
-    image: "/images/image-5.PNG",
+    image: "/images/image5.PNG",
   },
   {
     id: 6,
@@ -89,7 +89,7 @@ function LookbookItem({ item, index }: { item: typeof imageItems[0]; index: numb
               src={imageSrc}
               alt={item.category}
               fill
-              className="object-cover"
+              className="object-contain"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority={index < 2}
             />
