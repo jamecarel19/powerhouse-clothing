@@ -53,15 +53,6 @@ const imageItems = [
 
 function LookbookItem({ item, index }: { item: typeof imageItems[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  // Parallax effect
-  const y = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? -30 : 30, index % 2 === 0 ? 30 : -30]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
 
   return (
     <motion.div
@@ -78,7 +69,6 @@ function LookbookItem({ item, index }: { item: typeof imageItems[0]; index: numb
     >
       {/* Image with intrinsic sizing */}
       <motion.div
-        style={{ y, scale }}
         className="relative w-full overflow-hidden"
       >
         <Image
@@ -92,7 +82,6 @@ function LookbookItem({ item, index }: { item: typeof imageItems[0]; index: numb
 
         {/* Color overlay that responds to scroll */}
         <motion.div
-          style={{ opacity }}
           className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 pointer-events-none"
         />
       </motion.div>

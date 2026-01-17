@@ -43,7 +43,7 @@ export function Hero() {
           playsInline
           className="h-full w-full object-cover opacity-50"
         >
-          <source src="/images/powerhouse.mp4" type="video/mp4" />
+          <source src="/images/1.mp4" type="video/mp4" />
         </video>
         {/* Gradient Overlays for seamless blending */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/30" />
